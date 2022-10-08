@@ -3,7 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:zare_apps/main.dart';
 
 class ConvertPopup extends ConsumerStatefulWidget {
-  const ConvertPopup({Key? key}) : super(key: key);
+  /// weather the conversion is from ethiopian to gregorian or from gregorian to ethiopia.
+  /// from ethiopian to gregorian if true.
+  final bool? ethFirst;
+  const ConvertPopup({
+    Key? key,
+    this.ethFirst,
+  }) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ConvertPopupState();
@@ -147,18 +153,24 @@ class _ConvertPopupState extends ConsumerState<ConvertPopup> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    setState(() {
-                      day = int.parse(dayController.text);
-                      month = int.parse(monthController.text);
-                      year = int.parse(yearController.text);
-                    });
+                    widget.ethFirst!
+                        ? setState(() {
+                            day = int.parse(dayController.text);
+                            month = int.parse(monthController.text);
+                            year = int.parse(yearController.text);
+                          })
+                        : () {};
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                       const Color(0xFFea580c),
                     ),
                   ),
-                  child: const Text('Gregorian to Ethiopian'),
+                  child: Text(
+                    widget.ethFirst!
+                        ? 'Ethiopian to Gregorian'
+                        : 'Gregorian to Ethiopian',
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.symmetric(

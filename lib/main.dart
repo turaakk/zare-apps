@@ -8,6 +8,7 @@ void main() {
   runApp(
     const MaterialApp(
       debugShowCheckedModeBanner: false,
+      color: Color(0xFFea580c),
       home: DateConverter(),
     ),
   );
@@ -54,6 +55,7 @@ class _DateConverterState extends ConsumerState<DateConverter> {
   @override
   void initState() {
     ec.monthDays(geezDay: true, weekDayName: true);
+
     super.initState();
   }
 
@@ -70,7 +72,13 @@ class _DateConverterState extends ConsumerState<DateConverter> {
                 child: Column(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        var gr = DateTime.now();
+                        var et = EtDatetime.now();
+                        var gri = DateTime(et.moment);
+                        // var recieved = EtDatetime(gr.year);
+                        print(gri.year);
+                      },
                       child: Text(
                         'ዛሬ ቀን',
                         style: textStyle(),
@@ -234,12 +242,17 @@ class _DateConverterState extends ConsumerState<DateConverter> {
                 height: 50.0,
               ),
               SelectableText('Converter', style: textStyle()),
+              const SizedBox(
+                height: 20.0,
+              ),
               ElevatedButton(
                 onPressed: () {
                   showModal(
                     context: context,
                     builder: (context) {
-                      return const ConvertPopup();
+                      return const ConvertPopup(
+                        ethFirst: true,
+                      );
                     },
                   );
                 },
@@ -254,7 +267,16 @@ class _DateConverterState extends ConsumerState<DateConverter> {
                 height: 20.0,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  showModal(
+                    context: context,
+                    builder: (context) {
+                      return const ConvertPopup(
+                        ethFirst: false,
+                      );
+                    },
+                  );
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                     const Color(0xFFea580c),
